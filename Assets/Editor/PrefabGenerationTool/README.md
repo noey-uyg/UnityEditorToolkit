@@ -2,7 +2,7 @@
 ## 개요
 이 도구는 Unity 프로젝트에서 프리팹을 자동으로 생성하고, 생성된 프리팹에 맞는 메뉴 항목을 추가하는 도구입니다. 
 
-PrefabChangeWatcher를 통해 프리팹이 추가, 삭제, 이동될 때마다 자동으로 생성 코드를 갱신할 수 있으며, 
+PrefabChangeWatcher를 통해 프리팹이 추가, 삭제, 이동될 때마다 자동으로 생성 코드를 갱신할 수 있으며
 
 수동으로 메뉴에서 RefreshPrefabs를 실행하여 프리팹 목록을 업데이트할 수도 있습니다.
 
@@ -37,3 +37,6 @@ PrefabChangeWatcher를 통해 프리팹이 추가, 삭제, 이동될 때마다 �
 ### PrefabChangeWatcher.cs
 - 프리팹 추가, 삭제, 이동 시 자동으로 CreatePrefab.cs 파일을 갱신하는 기능을 담당합니다.
 - PrefabAutoMode 설정에 따라 자동 모드가 활성화되면 변경 사항을 감지하여 파일을 갱신합니다.
+
+## 권장 사항
+- 자동 모드는 리컴파일을 자주 유발하므로 사용을 권장하지 않습니다. Tools > Prefab Settings에서 Auto Mode를 꺼두고, Assets > RefreshPrefabs 메뉴를 통해 필요할 때 수동으로 갱신하는 방식이 더 안정적입니다.
