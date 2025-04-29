@@ -5,9 +5,9 @@ namespace noeyToolkit
 {
     public class PrefabSettings : EditorWindow
     {
-        private bool isAutoMode = true;
+        private bool _isAutoMode = true;
 
-        [MenuItem("Tools/Prefab Settings")]
+        [MenuItem("Tools/NoeyToolkit/Prefab Settings")]
         public static void ShowWindow()
         {
             GetWindow<PrefabSettings>("Prefab Settings");
@@ -17,12 +17,12 @@ namespace noeyToolkit
         {
             GUILayout.Label("Prefab Auto Generation Settings", EditorStyles.boldLabel);
 
-            bool newIsAutoMode = EditorGUILayout.Toggle("Auto Mode", isAutoMode);
+            bool newIsAutoMode = EditorGUILayout.Toggle("Auto Mode", _isAutoMode);
 
-            if (newIsAutoMode != isAutoMode)
+            if (newIsAutoMode != _isAutoMode)
             {
-                isAutoMode = newIsAutoMode;
-                EditorPrefs.SetBool("PrefabAutoMode", isAutoMode);
+                _isAutoMode = newIsAutoMode;
+                EditorPrefs.SetBool("PrefabAutoMode", _isAutoMode);
             }
         }
     }
