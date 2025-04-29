@@ -19,7 +19,7 @@ namespace noeyToolkit
             Randomizer
         }
 
-        private Dictionary<PlacementToolType, Action> tabActions;
+        private Dictionary<PlacementToolType, Action> tabActions; // 툴에 따른 처리 함수 저장
         private PlacementToolType _selectedToolType = PlacementToolType.SmartDurplicate;
 
         [MenuItem("Tools/NoeyToolkit/PlacementTools Window")]

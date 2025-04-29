@@ -15,11 +15,11 @@ namespace noeyToolkit
         LeadingZeros3   // Cube001
     }
 
-    public class SmartDuplicateUI : EditorWindow
+    public class SmartDuplicateUI
     {
-        private static int count = 1;
-        private static Vector3 posOffset, rotOffset, scaleOffset;
-        private static NumberingFormat format;
+        private static int count = 1; // 복제 객체 개수
+        private static Vector3 posOffset, rotOffset, scaleOffset; // 위치, 회전, 크기 오프셋
+        private static NumberingFormat format; // 번호 형식
 
         public static void Draw()
         {
@@ -35,12 +35,13 @@ namespace noeyToolkit
             GUILayout.Label("Preview of Numbering Format:", EditorStyles.boldLabel);
             ShowNumberingPreview();
             GUILayout.Space(10);
-            if (GUILayout.Button("Duplicate Selected"))
+            if (GUILayout.Button("Duplicate"))
             {
                 SmartDuplicateLogic.Duplicate(count, format, posOffset, rotOffset, scaleOffset);
             }
         }
 
+        // 번호 형식 미리보기
         private static void ShowNumberingPreview()
         {
             string baseName = "GameObject";

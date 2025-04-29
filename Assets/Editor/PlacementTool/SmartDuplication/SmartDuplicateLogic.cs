@@ -7,6 +7,7 @@ namespace noeyToolkit
 {
     public static class SmartDuplicateLogic
     {
+        // 복제 작업 처리
         public static void Duplicate(int count, NumberingFormat format, Vector3 pos, Vector3 rot, Vector3 scale)
         {
             var selected = Selection.gameObjects;
@@ -15,9 +16,10 @@ namespace noeyToolkit
             {
                 for (int i = 1; i <= count; i++)
                 {
-                    var copy = UnityEngine.Object.Instantiate(obj, obj.transform.parent);
+                    var copy = Object.Instantiate(obj, obj.transform.parent);
                     Undo.RegisterCreatedObjectUndo(copy, "Smart Duplicate");
 
+                    // 오프셋 적용
                     copy.transform.localPosition = obj.transform.localPosition + pos * i;
                     copy.transform.localEulerAngles = obj.transform.localEulerAngles + rot * i;
                     copy.transform.localScale = obj.transform.localScale + scale * i;
