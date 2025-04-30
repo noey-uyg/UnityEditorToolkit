@@ -11,7 +11,6 @@ namespace noeyToolkit
         private enum PlacementToolType
         {
             SmartDurplicate,
-            BatchParenting,
             AlignTool,
             PrefabReplacer,
             GroupByType,
@@ -33,8 +32,7 @@ namespace noeyToolkit
             tabActions = new Dictionary<PlacementToolType, Action>
             {
                 { PlacementToolType.SmartDurplicate, SmartDuplicateUI.Draw },
-                { PlacementToolType.BatchParenting, BatchParentingTab },
-                { PlacementToolType.AlignTool, AlignToolTab },
+                { PlacementToolType.AlignTool, AlignToolUI.Draw },
                 { PlacementToolType.PrefabReplacer, PrefabReplacerTab },
                 { PlacementToolType.GroupByType, GroupByTypeTab },
                 { PlacementToolType.Mirror, MirrorTab },
@@ -55,16 +53,6 @@ namespace noeyToolkit
                 drawAction?.Invoke();
         }
 
-        private void BatchParentingTab()
-        { 
-            GUILayout.Label("Batch Parenting", EditorStyles.boldLabel);
-
-        }
-        private void AlignToolTab()
-        { 
-            GUILayout.Label("Align Tool", EditorStyles.boldLabel);
-
-        }
         private void PrefabReplacerTab()
         { 
             GUILayout.Label("Prefab Replacer", EditorStyles.boldLabel);
