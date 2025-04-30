@@ -6,8 +6,10 @@
 
 ## 주요 기능
 1. Linear 정렬 : 선택된 객체들을 지정한 축(X, Y, Z) 방향으로 일정한 간격(Spacing)을 두고 일렬로 정렬합니다.
+```
 - 기준점: 첫 번째 선택 객체 or 선택 전체의 중심
 - 방향 반전 가능
+```
 2. Center 정렬 : 선택된 모든 객체를 선택 영역의 중심 위치로 이동시킵니다.
 3. Grid 정렬 : 행(Row)과 열(Col)을 설정하고, 지정한 간격(Spacing)에 따라 격자 형태로 배치합니다.
 4. Undo 지원 : Unity의 Undo 시스템을 사용하여 정렬 작업 이전 상태로 복원할 수 있습니다.
@@ -28,9 +30,9 @@
 ## 구현 세부 사항
 ### AlignToolLogic.cs
 - AlignObjects 메서드 : 정렬 방식 분기 처리
-    - ApplyLinearAlignment: 축 방향 정렬
-    - MoveToCenter: 중심 정렬
-    - ArrangeInGrid: 그리드 배치
+    - ApplyLinearAlignment : 축 방향 정렬
+    - MoveToCenter : 중심 정렬
+    - ArrangeInGrid : 그리드 배치
 - 정렬된 객체는 Undo 기능을 사용하여 되돌릴 수 있습니다.
 
 ### AlignToolUI.cs
