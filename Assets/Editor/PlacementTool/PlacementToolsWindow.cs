@@ -36,7 +36,7 @@ namespace noeyToolkit
                 { PlacementToolType.PrefabReplacer, PrefabReplacerTab },
                 { PlacementToolType.GroupByType, GroupByTypeTab },
                 { PlacementToolType.Mirror, MirrorTab },
-                { PlacementToolType.Randomizer, RandomizerTab }
+                { PlacementToolType.Randomizer, RandomizerUI.Draw }
             };
         }
 
@@ -67,9 +67,6 @@ namespace noeyToolkit
         { 
             GUILayout.Label("Mirror Tool", EditorStyles.boldLabel);
 
-        }
-        private void RandomizerTab() { 
-            GUILayout.Label("Randomizer", EditorStyles.boldLabel);
         }
     }
 }
