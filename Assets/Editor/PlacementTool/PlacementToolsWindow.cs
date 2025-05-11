@@ -33,7 +33,7 @@ namespace noeyToolkit
             {
                 { PlacementToolType.SmartDurplicate, SmartDuplicateUI.Draw },
                 { PlacementToolType.AlignTool, AlignToolUI.Draw },
-                { PlacementToolType.PrefabReplacer, PrefabReplacerTab },
+                { PlacementToolType.PrefabReplacer, PrefabReplacerUI.Draw },
                 { PlacementToolType.GroupByType, GroupByTypeTab },
                 { PlacementToolType.Mirror, MirrorTab },
                 { PlacementToolType.Randomizer, RandomizerUI.Draw }
@@ -53,11 +53,6 @@ namespace noeyToolkit
                 drawAction?.Invoke();
         }
 
-        private void PrefabReplacerTab()
-        { 
-            GUILayout.Label("Prefab Replacer", EditorStyles.boldLabel);
-
-        }
         private void GroupByTypeTab()
         { 
             GUILayout.Label("Group by Type", EditorStyles.boldLabel);
