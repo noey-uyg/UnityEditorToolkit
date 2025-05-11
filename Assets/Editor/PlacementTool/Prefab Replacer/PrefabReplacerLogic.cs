@@ -11,30 +11,31 @@ namespace noeyToolkit
         {
             if (prefab == null)
             {
-                Debug.LogError("[PrefabReplacer] Prefab Is Not Assigned");
+                Debug.LogError("[PrefabReplacer] Prefab is not assigned");
                 return;
             }
 
             if(targets == null || targets.Length == 0)
             {
-                Debug.LogError("{PrefabReplacer] Target No Selected");
+                Debug.LogError("[PrefabReplacer] Target no selected");
                 return;
             }
 
             if (!PrefabUtility.IsPartOfPrefabAsset(prefab))
             {
-                Debug.LogError("[PrefabReplacer] Selected Object Is Not Prefab");
+                Debug.LogError("[PrefabReplacer] Selected object is not prefab");
                 return;
             }
 
             foreach(GameObject target in targets)
             {
                 Transform originaltransform = target.transform;
+                int siblingIndex = originaltransform.GetSiblingIndex();
 
                 GameObject newObject = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
                 if(newObject == null )
                 {
-                    Debug.LogError("[PrefabReplacer] Failed To Instantiate Prefab");
+                    Debug.LogError("[PrefabReplacer] Failed to instantiate prefab");
                     continue;
                 }
 
@@ -42,6 +43,7 @@ namespace noeyToolkit
                 newObject.transform.SetPositionAndRotation(originaltransform.position, originaltransform.rotation);
                 newObject.transform.localScale = originaltransform.localScale;
                 newObject.transform.parent = originaltransform.parent;
+                newObject.transform.SetSiblingIndex(siblingIndex);
 
                 Undo.DestroyObjectImmediate(target);
             }
