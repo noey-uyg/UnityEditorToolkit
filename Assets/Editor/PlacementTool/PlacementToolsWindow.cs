@@ -35,7 +35,7 @@ namespace noeyToolkit
                 { PlacementToolType.AlignTool, AlignToolUI.Draw },
                 { PlacementToolType.PrefabReplacer, PrefabReplacerUI.Draw },
                 { PlacementToolType.GroupByType, GroupByTypeTab },
-                { PlacementToolType.Mirror, MirrorTab },
+                { PlacementToolType.Mirror, MirrorObjectUI.Draw },
                 { PlacementToolType.Randomizer, RandomizerUI.Draw }
             };
         }
@@ -56,12 +56,6 @@ namespace noeyToolkit
         private void GroupByTypeTab()
         { 
             GUILayout.Label("Group by Type", EditorStyles.boldLabel);
-
-        }
-        private void MirrorTab()
-        { 
-            GUILayout.Label("Mirror Tool", EditorStyles.boldLabel);
-
         }
     }
 }
