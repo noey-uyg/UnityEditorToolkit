@@ -34,7 +34,6 @@ namespace noeyToolkit
                 { PlacementToolType.SmartDurplicate, SmartDuplicateUI.Draw },
                 { PlacementToolType.AlignTool, AlignToolUI.Draw },
                 { PlacementToolType.PrefabReplacer, PrefabReplacerUI.Draw },
-                { PlacementToolType.GroupByType, GroupByTypeTab },
                 { PlacementToolType.Mirror, MirrorObjectUI.Draw },
                 { PlacementToolType.Randomizer, RandomizerUI.Draw }
             };
@@ -51,11 +50,6 @@ namespace noeyToolkit
 
             if (tabActions.TryGetValue(_selectedToolType, out var drawAction))
                 drawAction?.Invoke();
-        }
-
-        private void GroupByTypeTab()
-        { 
-            GUILayout.Label("Group by Type", EditorStyles.boldLabel);
         }
     }
 }
