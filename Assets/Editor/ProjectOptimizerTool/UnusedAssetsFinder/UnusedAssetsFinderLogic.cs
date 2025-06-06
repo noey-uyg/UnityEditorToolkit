@@ -9,8 +9,7 @@ namespace noeyToolkit
     {
         public static List<string> FindUnusedAssets(HashSet<string> excludedExtensions)
         {
-            var unusedAssets = new List<string>();
-
+            // 모든 에셋 경로 수집
             string[] allAssetPaths = AssetDatabase.GetAllAssetPaths()
                 .Where(path =>
                 path.StartsWith("Assets/") &&
@@ -18,15 +17,26 @@ namespace noeyToolkit
                 !excludedExtensions.Contains(Path.GetExtension(path).ToLower()))
                 .ToArray();
 
-            foreach (var asset in allAssetPaths)
-            {
-                string[] deps = AssetDatabase.GetDependencies(asset, true);
+            // 빌드 세팅에 포함된 씬 기반으로 사용된 에셋 수집
+            var usedAssets = new HashSet<string>();
+            var scenePaths = EditorBuildSettings.scenes
+                .Where(s=>s.enabled)
+                .Select(s =>s.path)
+                .ToList();
 
-                if (deps.Length == 1 && deps[0] == asset)
+            foreach(var scene in scenePaths)
+            {
+                var deps = AssetDatabase.GetDependencies(scene, true);
+                foreach(var dep in deps)
                 {
-                    unusedAssets.Add(asset);
+                    usedAssets.Add(dep);
                 }
             }
+
+            // 사용되지 않는 에셋 필터링
+            var unusedAssets = allAssetPaths
+                .Where(path => !usedAssets.Contains(path))
+                .ToList();
 
             return unusedAssets;
         }

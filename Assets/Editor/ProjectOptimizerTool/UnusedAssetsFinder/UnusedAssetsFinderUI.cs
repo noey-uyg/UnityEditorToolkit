@@ -62,6 +62,11 @@ namespace noeyToolkit
             }
             EditorGUILayout.EndHorizontal();
 
+            if(GUILayout.Button("Refresh Asset"))
+            {
+                InitExtensions();
+            }
+
             // 확장자 선택 UI
             EditorGUILayout.BeginVertical(GUI.skin.box);
             foreach (var ext in new List<string>(extensionExcludes.Keys))
