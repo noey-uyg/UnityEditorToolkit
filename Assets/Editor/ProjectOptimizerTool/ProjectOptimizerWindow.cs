@@ -31,6 +31,7 @@ namespace noeyToolkit
             tabActions = new Dictionary<OptimizerToolType, Action>
             {
                 { OptimizerToolType.UnusedAssetsFinder, UnusedAssetsFinderUI.Draw },
+                { OptimizerToolType.TextureBatchEditor, TextureImporterBatchEditorUI.Draw }
             };
         }
 

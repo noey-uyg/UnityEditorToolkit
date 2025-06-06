@@ -104,7 +104,7 @@ namespace noeyToolkit
             if(unusedAssets.Count > 0)
             {
                 GUILayout.Label($"Found {unusedAssets.Count} unused assets", EditorStyles.helpBox);
-                scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Height(200));
+                scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Height(600));
 
                 foreach(var assetPath in unusedAssets)
                 {
