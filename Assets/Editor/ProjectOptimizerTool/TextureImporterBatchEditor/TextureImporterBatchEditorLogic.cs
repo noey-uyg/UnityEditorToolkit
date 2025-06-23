@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -19,8 +17,10 @@ namespace noeyToolkit
 
                 if (importer == null) continue;
 
+                // 알파 채널 감지
                 bool hasAlpha = detectAlpha ? TextureHasAlpha(tex) : importer.DoesSourceTextureHaveAlpha();
 
+                // 기본 설정 적용
                 importer.textureType = type;
                 importer.maxTextureSize = maxSize;
                 importer.textureCompression = compression;
@@ -55,6 +55,7 @@ namespace noeyToolkit
             return changedCount;
         }
 
+        // 텍스쳐가 알파 채널을 포함하는지 확인
         private static bool TextureHasAlpha(Texture2D texture)
         {
             var path = AssetDatabase.GetAssetPath(texture);

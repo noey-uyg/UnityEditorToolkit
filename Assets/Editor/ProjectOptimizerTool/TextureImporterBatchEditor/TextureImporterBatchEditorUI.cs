@@ -1,6 +1,3 @@
-using Codice.Client.BaseCommands;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -16,6 +13,7 @@ namespace noeyToolkit
         private static bool detectAlphaChannel = true;
         private static TextureImporterType textureType = TextureImporterType.Default;
 
+        // 사이즈 옵션
         private static readonly int[] sizeOptions = new[] { 16, 32, 64, 128, 256, 512, 1024, 2048, 4096};
         private static readonly string[] sizeLabels = System.Array.ConvertAll(sizeOptions, s => s.ToString());
 
@@ -23,6 +21,7 @@ namespace noeyToolkit
         {
             GUILayout.Label("Textrue Improter Batch Editor", EditorStyles.boldLabel);
 
+            // 텍스쳐 설정
             maxSize = EditorGUILayout.IntPopup("Max Texture Size", maxSize, sizeLabels, sizeOptions);
             compression = (TextureImporterCompression)EditorGUILayout.EnumPopup("Compression", compression);
             enableMipMaps = EditorGUILayout.Toggle("Gnerate Mip Maps", enableMipMaps);
@@ -30,6 +29,8 @@ namespace noeyToolkit
 
             GUILayout.Space(5);
             GUILayout.Label("Playform Overrides", EditorStyles.boldLabel);
+
+            // 플랫폼 적용 여부
             applyToAndroid = EditorGUILayout.Toggle("Apply to Android", applyToAndroid);
             applyToIOS = EditorGUILayout.Toggle("Apply to IOS", applyToIOS);
 

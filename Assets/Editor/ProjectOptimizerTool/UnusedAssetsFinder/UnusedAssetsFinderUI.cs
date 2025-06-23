@@ -41,6 +41,8 @@ namespace noeyToolkit
             GUILayout.Label("Unused Assets Finder", EditorStyles.boldLabel);
 
             GUILayout.Space(20);
+
+            // 씬 참조 에셋 체크
             GUILayout.Label("Current Scene Dependencies", EditorStyles.boldLabel);
 
             if (GUILayout.Button("Refresh"))

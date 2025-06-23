@@ -11,8 +11,6 @@ namespace noeyToolkit
         { 
             UnusedAssetsFinder,
             TextureBatchEditor,
-            AutoLightmapSettings,
-            SceneDependencyViewer,
             LargeMeshDetector,
             BuildSizeAnalyzer
         }
@@ -31,7 +29,8 @@ namespace noeyToolkit
             tabActions = new Dictionary<OptimizerToolType, Action>
             {
                 { OptimizerToolType.UnusedAssetsFinder, UnusedAssetsFinderUI.Draw },
-                { OptimizerToolType.TextureBatchEditor, TextureImporterBatchEditorUI.Draw }
+                { OptimizerToolType.TextureBatchEditor, TextureImporterBatchEditorUI.Draw },
+                { OptimizerToolType.LargeMeshDetector, LargeMeshDetectorUI.Draw }
             };
         }
 
