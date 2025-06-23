@@ -9,7 +9,9 @@ namespace noeyToolkit
     public class UnusedAssetsFinderUI
     {
         private static List<string> unusedAssets = new List<string>();
-        private static Vector2 scrollPos;
+        private static List<string> currentDeps = new List<string>();
+        private static Vector2 unusedScrollPos;
+        private static Vector2 depsScrollPos;
         private static bool searchInProgress = false;
 
         private static HashSet<string> allExtensions = new HashSet<string>();
@@ -37,6 +39,44 @@ namespace noeyToolkit
         public static void Draw()
         {
             GUILayout.Label("Unused Assets Finder", EditorStyles.boldLabel);
+
+            GUILayout.Space(20);
+            GUILayout.Label("Current Scene Dependencies", EditorStyles.boldLabel);
+
+            if (GUILayout.Button("Refresh"))
+            {
+                currentDeps = UnusedAssetsFinderLogic.GetCurrentSceneDependencies();
+            }
+
+            if(currentDeps == null || currentDeps.Count == 0)
+            {
+                currentDeps = UnusedAssetsFinderLogic.GetCurrentSceneDependencies();
+            }
+
+            if(currentDeps.Count > 0)
+            {
+                depsScrollPos = EditorGUILayout.BeginScrollView(depsScrollPos, GUILayout.Height(200));
+                foreach(var dep in currentDeps)
+                {
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.TextField(dep);
+
+                    if(GUILayout.Button("Ping", GUILayout.Width(50)))
+                    {
+                        var obj = AssetDatabase.LoadMainAssetAtPath(dep);
+                        EditorGUIUtility.PingObject(obj);
+                    }
+
+                    if(GUILayout.Button("Copy", GUILayout.Width(50)))
+                    {
+                        EditorGUIUtility.systemCopyBuffer = dep;
+                    }
+
+                    EditorGUILayout.EndHorizontal();
+                }
+
+                EditorGUILayout.EndScrollView();
+            }
 
             if (allExtensions.Count == 0)
             {
@@ -104,7 +144,7 @@ namespace noeyToolkit
             if(unusedAssets.Count > 0)
             {
                 GUILayout.Label($"Found {unusedAssets.Count} unused assets", EditorStyles.helpBox);
-                scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Height(600));
+                unusedScrollPos = EditorGUILayout.BeginScrollView(unusedScrollPos, GUILayout.Height(600));
 
                 foreach(var assetPath in unusedAssets)
                 {

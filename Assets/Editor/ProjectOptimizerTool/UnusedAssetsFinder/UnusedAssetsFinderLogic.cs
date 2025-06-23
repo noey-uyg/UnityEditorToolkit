@@ -40,6 +40,20 @@ namespace noeyToolkit
 
             return unusedAssets;
         }
+
+        public static List<string> GetCurrentSceneDependencies()
+        {
+            List<string> deps = new List<string>();
+
+            var currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+            if (!currentScene.IsValid())
+                return deps;
+
+            return deps = AssetDatabase.GetDependencies(currentScene.path, true)
+                .Where(path => path.StartsWith("Assets/") && !Directory.Exists(path))
+                .Distinct()
+                .ToList();
+        }
     }
 
 }
