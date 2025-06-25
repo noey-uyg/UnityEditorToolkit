@@ -30,7 +30,8 @@ namespace noeyToolkit
             {
                 { OptimizerToolType.UnusedAssetsFinder, UnusedAssetsFinderUI.Draw },
                 { OptimizerToolType.TextureBatchEditor, TextureImporterBatchEditorUI.Draw },
-                { OptimizerToolType.LargeMeshDetector, LargeMeshDetectorUI.Draw }
+                { OptimizerToolType.LargeMeshDetector, LargeMeshDetectorUI.Draw },
+                { OptimizerToolType.BuildSizeAnalyzer, BuildSizeAnalyzerUI.Draw }
             };
         }
 
