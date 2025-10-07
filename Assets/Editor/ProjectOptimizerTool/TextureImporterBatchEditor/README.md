@@ -1,44 +1,41 @@
-# Align Tool
+# Texture Importer Batch Editor Tool
 ## 개요
-이 도구는 Unity에서 선택된 객체들을 직관적으로 정렬할 수 있도록 도와주는 툴입니다.
+이 도구는 Unity 프로젝트 내 여러 텍스처 에셋의 임포트 설정을 일괄적으로 변경할 수 있는 에디터 유틸리티입니다.
 
-객체들을 일렬, 중심, 그리드 형태로 정렬하며, 씬 편집 중 반복적인 객체 정렬 작업을 빠르고 정확하게 처리할 수 있도록 도와줍니다.
+모바일 빌드를 비롯한 플랫폼 별 임포트 세팅을 한 번에 적용할 수 있으며, 압축 설정, 최대 해상도, MipMap 생성 여부, 알파 채널 감지 등을 빠르고 일관되게 설정할 수 있습니다.
+
+텍스처 최적화와 플랫폼 대응 세팅을 효율적으로 관리할 수 있도록 설계되었습니다.
 
 ## 주요 기능
-1. Linear 정렬 : 선택된 객체들을 지정한 축(X, Y, Z) 방향으로 일정한 간격(Spacing)을 두고 일렬로 정렬합니다.
-```
-- 기준점: 첫 번째 선택 객체 or 선택 전체의 중심
-- 방향 반전 가능
-```
-2. Center 정렬 : 선택된 모든 객체를 선택 영역의 중심 위치로 이동시킵니다.
-3. Grid 정렬 : 행(Row)과 열(Col)을 설정하고, 지정한 간격(Spacing)에 따라 격자 형태로 배치합니다.
-4. Undo 지원 : Unity의 Undo 시스템을 사용하여 정렬 작업 이전 상태로 복원할 수 있습니다.
+1. 일괄 설정 적용 : 여러 텍스처를 선택한 후, 설정값을 한 번에 적용합니다.
+2. 플랫폼별 세팅 지원 : Android, IOS용 별도 임포트 설정을 적용할 수 있습니다.
+3. 알파 채널 자동 감지 : 텍스처의 알파 채널 존재 여부를 자동 감지하여 투명 여부 설정을 자동화합니다.
+4. 압축 형식 선택 : TexturImporterCompression 옵션을 통해 압출 품질을 조정합니다.
+5. MipMap 생성 여부 제어 : 필요에 따라 MipMap 생성 기능을 켜거나 끌 수 있습니다.
+6. 미리보기 제공 : 현재 선택된 텍스처들의 썸네일을 미리 확인할 수 있습니다.
 
 ## 사용 방법
-1. Align Tool 열기 : Unity 메뉴에서 Tools > NoeyToolkit > Placement Tools Window를 선택하여 윈도우를 열고, Tool > Align Tool 선택합니다.
-2. 여러 객체를 선택하고, 원하는 정렬 방식을 선택하여 아래 옵션을 설정합니다:
-### Linear
-- Axis : X / Y / Z 축 방향 선택
-- Origin : 정렬 기준 위치 선택
-- Spacing : 객체 간 간격
-- Reverse Direction : 정렬 방향 반전 여부
-### Grid
-- Rows / Columns : 행과 열 개수
-- Spacing : 셀 간격 (Vector2)
-3. Apply 버튼을 누르면 선택된 객체들이 설정에 따라 정렬됩니다.
+1. Tools > NoeyToolkit > Project Optimizer Toolkit > Texture Batch Editor를 선택합니다.
+2. Project 뷰에서 임포트 설정을 변경할 텍스처를 선택합니다.
+3. 설정값 입력
+4. "Apply To Selected Textures" 버튼을 클릭하여 선택된 모든 텍스처에 설정을 적용합니다.
+5. 미리보기 확인
 
 ## 구현 세부 사항
-### AlignToolLogic.cs
-- AlignObjects 메서드 : 정렬 방식 분기 처리
-    - ApplyLinearAlignment : 축 방향 정렬
-    - MoveToCenter : 중심 정렬
-    - ArrangeInGrid : 그리드 배치
-- 정렬된 객체는 Undo 기능을 사용하여 되돌릴 수 있습니다.
+### TextureImporterBatchEditorLogic.cs
+- ApplySettingsToTextures
+    - 전달받은 Texture2D 배열에 대해 각종 임포트 설정을 일괄 적용합니다.
+- TextureHasAlpha
+    - 에셋 경로를 기준으로 알파 채널 존재 여부를 검사하여 반환합니다.
 
-### AlignToolUI.cs
-- AlignToolUI 클래스는 사용자 인터페이스를 정의하며, 정렬 툴을 시각적으로 제공합니다.
-- Draw 메서드에서 입력된 옵션을 기반으로 AlignToolLogic 호출
+### TextureImporterBatchEditorUI.cs
+- 사용자 인터페이스를 담당하는 클래스입니다.
+- 각 옵션을 GUI로 설정하고, 버튼 클릭 시 로직을 호출합니다.
+- 선택된 텍스처 미리보기를 표시합니다.
 
 ## 참고 사항
-- Grid 정렬 주의 : 선택된 객체 수보다 Rows * Columns가 작으면 일부 객체가 배치되지 않을 수 있습니다.
-- 정렬 기준 좌표계는 World Position 기준입니다.
+- project 뷰에서 텍스처 에셋만 선택 가능합니다.(폴더 선택 불가)
+- Apply To Selected Textures 클릭 시 즉시 Reimport가 수행되므로, 대량의 텍스처를 선택할 경우 시간이 다소 소요될 수 있습니다.
+- 플랫폼 별 설정은 Unity가 지원하는 TextureImporterFormat을 자동으로 선택합니다.
+- 알파 채널이 존재하는 경우 자동으로 ASTC_4x4, 존재하지 않을 경우 ETC2_RGB4(Android) 또는 PVRTC_RGB4(iOS)로 지정됩니다.
+- 변경된 설정은 unity의 Undo 시스템에 등록되지 않습니다.(필요 시 버전 관리 시스템 사용을 권장합니다.)
