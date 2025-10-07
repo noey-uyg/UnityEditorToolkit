@@ -12,7 +12,7 @@
 5. 스크롤 UI 지원 : 결과가 많을 경우 스크롤로 편리하게 탐색할 수 있습니다.
 
 ## 사용 방법
-1. Tools > NoeyToolkit > Optimization Tools > Large Mesh Detector를 선택해 툴 윈도우를 엽니다.
+1. Tools > NoeyToolkit > Project Optimizer Toolkit > Large Mesh Detector를 선택해 툴 윈도우를 엽니다.
 2. Triangle Threshold 필드에 기준 삼각형 수를 입력합니다. 기본값은 5000입니다.
 3. Scan Scene 버튼을 클릭하면 현재 씬의 모든 렌더러를 분석합니다.
 4. 탐지된 대형 메쉬 리스트가 아래 표시됩니다. 각 항목의 오른쪽 "Ping" 버튼을 클릭하면 해당 오브젝트가 강조됩니다.
