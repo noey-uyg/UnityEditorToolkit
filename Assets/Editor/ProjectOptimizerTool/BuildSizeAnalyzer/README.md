@@ -1,44 +1,41 @@
 # Align Tool
 ## 개요
-이 도구는 Unity에서 선택된 객체들을 직관적으로 정렬할 수 있도록 도와주는 툴입니다.
+이 도구는 Unity 프로젝트의 마지막 빌드 결과를 기반으로, 각 에셋이 빌드에서 차지하는 용량을 분석해주는 도구입니다.
 
-객체들을 일렬, 중심, 그리드 형태로 정렬하며, 씬 편집 중 반복적인 객체 정렬 작업을 빠르고 정확하게 처리할 수 있도록 도와줍니다.
+빌드 리포트를 활용하여 에셋별 크기 기여도를 빠르게 파악할 수 있으며, 최적화 과정에서 용량이 큰 리소스를 식별하는 데 유용합니다.
 
 ## 주요 기능
-1. Linear 정렬 : 선택된 객체들을 지정한 축(X, Y, Z) 방향으로 일정한 간격(Spacing)을 두고 일렬로 정렬합니다.
-```
-- 기준점: 첫 번째 선택 객체 or 선택 전체의 중심
-- 방향 반전 가능
-```
-2. Center 정렬 : 선택된 모든 객체를 선택 영역의 중심 위치로 이동시킵니다.
-3. Grid 정렬 : 행(Row)과 열(Col)을 설정하고, 지정한 간격(Spacing)에 따라 격자 형태로 배치합니다.
-4. Undo 지원 : Unity의 Undo 시스템을 사용하여 정렬 작업 이전 상태로 복원할 수 있습니다.
+1. 빌드 크기 분석 : 마지막 빌드 리포트를 기반으로 각 에셋의 용량을 계산합니다.
+2. 상위 에셋 표시 : 빌드에서 용량을 가장 많이 차지하는 상위 10개의 에셋을 표시합니다.
+3. 전체 요약 제공 : 전체 에셋 개수와 총 용량을 함께 확인할 수 있습니다.
+4. 로그 출력 : 모든 에셋의 상세 크기 정보가 콘솔에 출력됩니다.
+5. 에디터 연동 : Unity Editor 창에서 바로 분석 버튼을 눌러 결과를 확인할 수 있습니다.
 
 ## 사용 방법
-1. Align Tool 열기 : Unity 메뉴에서 Tools > NoeyToolkit > Placement Tools Window를 선택하여 윈도우를 열고, Tool > Align Tool 선택합니다.
-2. 여러 객체를 선택하고, 원하는 정렬 방식을 선택하여 아래 옵션을 설정합니다:
-### Linear
-- Axis : X / Y / Z 축 방향 선택
-- Origin : 정렬 기준 위치 선택
-- Spacing : 객체 간 간격
-- Reverse Direction : 정렬 방향 반전 여부
-### Grid
-- Rows / Columns : 행과 열 개수
-- Spacing : 셀 간격 (Vector2)
-3. Apply 버튼을 누르면 선택된 객체들이 설정에 따라 정렬됩니다.
+1. Build 실행
+    - 유니티 빌드를 수행 하면 빌드 경로가 EditorPrefs를 통해 저장됩니다.
+2. Analyzer 실행
+    - Unity 메뉴에서 Tools > NoeyToolkit > Build Size Analyzer를 열고, "Analyze Last Build" 버튼을 클릭합니다.
+3. 결과 확인
+    - 최대 상위 10개의 에셋과 그 용량이 표시됩니다.
+    - 전체 로그는 Unity 콘솔에 출력됩니다.
 
 ## 구현 세부 사항
-### AlignToolLogic.cs
-- AlignObjects 메서드 : 정렬 방식 분기 처리
-    - ApplyLinearAlignment : 축 방향 정렬
-    - MoveToCenter : 중심 정렬
-    - ArrangeInGrid : 그리드 배치
-- 정렬된 객체는 Undo 기능을 사용하여 되돌릴 수 있습니다.
+### BuildSizeAnalyzerLogic.cs
+- AnalyzeLastBuild()
+    - 마지막 빌드 경로를 EditorPrefs에서 불러와 BuildPipeline.BuildPlayer()를 이용해 빌드 리포트를 분석합니다.
+    - packedAssets 정보를 기반으로 에셋 경로별 크기(PackedSize)를 합산합니다.
+    - 결과는 AssetSizeInfo 리스트로 반환되며, 크기 기준으로 내림차순 정렬됩니다.
+- StoreBuildPath()
+    - 빌드 시 지정한 빌드 경로를 EditorPrefs에 저장하여 나중에 분석 시 참조할 수 있도록 합니다.
 
-### AlignToolUI.cs
-- AlignToolUI 클래스는 사용자 인터페이스를 정의하며, 정렬 툴을 시각적으로 제공합니다.
-- Draw 메서드에서 입력된 옵션을 기반으로 AlignToolLogic 호출
+### BuildSizeAnalyzerUI.cs
+- 간단한 에디터 UI를 구성하며, "Analyze Last Build" 버튼을 제공합니다.
+- 버튼 클릭 시 BuildSizeAnalyzerLogic.AnalyzeLastBuild()를 호출하고, 상위 10개의 에셋의 크기 요약 정보를 EditorUtility.DisplayDialog로 표시합니다.
+- 전체 에셋 결과는 Unity 콘솔로 출력됩니다.
 
 ## 참고 사항
-- Grid 정렬 주의 : 선택된 객체 수보다 Rows * Columns가 작으면 일부 객체가 배치되지 않을 수 있습니다.
-- 정렬 기준 좌표계는 World Position 기준입니다.
+- 분석은 반드시 빌드 리포트가 존재하는 상태에서만 수행됩니다.
+- 임시 빌드나 스크립트 전용 빌드에서는 정확한 크기 정보를 얻을 수 없습니다.
+- packedAssets 정보는 Unity 버전에 따라 일부 다를 수 있습니다.
+- 결과 단위는 EditorUtility.FormatBytes()를 통해 자동 변환되어 표시됩니다.
