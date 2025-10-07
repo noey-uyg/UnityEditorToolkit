@@ -1,4 +1,4 @@
-# Align Tool
+# Unused Assets Finder Tool
 ## 개요
 이 도구는 Unity 프로젝트 내에서 현재 빌드나 활성화된 씬에서 사용되지 않는 에셋을 탐지하고 관리할 수 있는 유틸리티입니다.
 
